@@ -10,18 +10,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import s from './Home.css';
+import normalizeCss from 'normalize.css';
+import s from './map.css';
 
-class Home extends React.Component {
-  static propTypes = {};
+class Map extends React.Component {
+  static propTypes = {
+    title: PropTypes.string.isRequired,
+  };
 
   render() {
     return (
       <div className={s.root}>
-        <div className={s.container}>Home</div>
+        <div className={s.container}>
+          <h1>{this.props.title}</h1>
+        </div>
       </div>
     );
   }
 }
 
-export default withStyles(s)(Home);
+export default withStyles(normalizeCss, s)(Map);

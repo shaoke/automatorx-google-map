@@ -8,17 +8,19 @@
  */
 
 import React from 'react';
-import Home from './Home';
-import Layout from '../../components/Layout';
+import Map from './Map';
+import LayoutFullPage from '../../components/LayoutFullPage';
 
-async function action() {
+const title = 'Google Map';
+
+function action() {
   return {
-    title: 'Automator X Home',
-    chunks: ['home'],
+    chunks: ['map'],
+    title,
     component: (
-      <Layout>
-        <Home />
-      </Layout>
+      <LayoutFullPage>
+        <Map title={title} />
+      </LayoutFullPage>
     ),
   };
 }

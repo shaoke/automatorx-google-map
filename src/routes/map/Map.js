@@ -10,21 +10,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import Grid from '@material-ui/core/Grid';
+
+// import { withStyles } from '@material-ui/core/styles';
 import normalizeCss from 'normalize.css';
 import s from './map.css';
+import MapAddresses from '../../components/MapAddresses';
 
 class Map extends React.Component {
-  static propTypes = {
-    title: PropTypes.string.isRequired,
-  };
+  static propTypes = {};
 
   render() {
     return (
-      <div className={s.root}>
-        <div className={s.container}>
-          <h1>{this.props.title}</h1>
-        </div>
-      </div>
+      <Grid container spacing={0}>
+        <Grid item xs={4}>
+          <MapAddresses />
+        </Grid>
+        <Grid item xs={8}>
+          Right Container
+        </Grid>
+      </Grid>
     );
   }
 }

@@ -12,6 +12,7 @@ import PropTypes from 'prop-types';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
+import AddCircleOutline from '@material-ui/icons/AddCircleOutline';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
@@ -80,6 +81,12 @@ class SearchMapDirections extends React.Component {
             );
           })}
         </Stepper>
+        <div>
+          <IconButton>
+            <AddCircleOutline />
+          </IconButton>
+          <label> Add destination </label>
+        </div>
       </div>
     );
   }

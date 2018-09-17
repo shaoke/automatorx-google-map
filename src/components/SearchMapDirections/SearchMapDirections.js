@@ -13,66 +13,69 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddCircleOutline from '@material-ui/icons/AddCircleOutline';
+import PageView from '@material-ui/icons/PageView';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
-import StepContent from '@material-ui/core/StepContent';
 import Input from '@material-ui/core/Input';
+import Button from '@material-ui/core/Button';
 
 import s from './SearchMapDirections.css';
 
-class SearchMapDirections extends React.Component {
-  /*
-    [,
-      {
-        "value": "1600 Amphitheatre Pkwy, Mountain View, CA 94043",
-        "valid": true
-      }
-    ]
-  */
-  static propTypes = {
-    directions: PropTypes.arrayOf(
-      PropTypes.objectOf(PropTypes.bool, PropTypes.string),
-    ).isRequired,
-  };
-  state = {
-    directions: [
-      {
-        "value": "Santa Clara, CA / Great America, 5099 Stars and Stripes Dr, Santa Clara, CA 95054",
-        "valid": true
-      },
-      {
-        "value": "672 Johanna Ave, Sunnyvale, CA 94085",
-        "valid": true
-      }
-    ],
-    activeStep: 0
-  };
+const propTypes = {
+  directionsData: PropTypes.array,
+  createDirection: PropTypes.func.isRequired,
+  updateDirection: PropTypes.func.isRequired,
+  removeDirection: PropTypes.func.isRequired,
+};
 
-  handleChange = name => event => {
+class SearchMapDirections extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleChange.bind(this);
+    // this.handleClickAddressInput.bind(this);
+    this.initialState = {
+      activeStep: 0,
+    };
+    this.state = this.initialState;
+  }
+
+  handleChange(event, index) {
+    this.props.updateDirection(event.target.value, index);
+  }
+
+  handleClickAddressInput(event, index) {
+    event.preventDefault();
     this.setState({
-      [name]: event.target.value,
+      activeStep: index,
     });
-  };
+  }
 
   render() {
-    const { activeStep, directions } = this.state;
-
+    const { directionsData } = this.props;
+    const { activeStep } = this.state;
     return (
       <div className={s.root}>
         <Stepper nonLinear activeStep={activeStep} orientation="vertical">
-          {directions.map((step, index) => {
+          {directionsData.map((step, index) => {
             return (
-              <Step key={`step${index}`}>
+              <Step key={`${index}`}>
                 <StepLabel>
                   <div className={s.stepLabelContainer}>
                     <Input
+                      key={`address-${index}`}
                       fullWidth
                       error={!step.valid}
                       value={step.value}
+                      onChange={event => this.handleChange(event, index)}
+                      onClick={event =>
+                        this.handleClickAddressInput(event, index)
+                      }
                       placeholder="Please type correct address"
                     />
-                    <IconButton>
+                    <IconButton
+                      onClick={() => this.props.removeDirection(index)}
+                    >
                       <DeleteIcon />
                     </IconButton>
                   </div>
@@ -81,15 +84,26 @@ class SearchMapDirections extends React.Component {
             );
           })}
         </Stepper>
-        <div>
-          <IconButton>
+        <div className={s.operationContainer}>
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={() => this.props.createDirection('')}
+          >
             <AddCircleOutline />
-          </IconButton>
-          <label> Add destination </label>
+            <span> Add destination </span>
+          </Button>
+
+          <Button variant="outlined" color="primary" className={s.previewBtn}>
+            <PageView />
+            <span> Preview </span>
+          </Button>
         </div>
       </div>
     );
   }
 }
+
+SearchMapDirections.propTypes = propTypes;
 
 export default withStyles(s)(SearchMapDirections);

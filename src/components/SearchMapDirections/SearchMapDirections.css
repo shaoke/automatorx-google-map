@@ -5,3 +5,11 @@
 .stepLabelContainer {
     display: flex;
 }
+
+.operationContainer {
+    padding: 20px;
+}
+
+.previewBtn{
+    margin-left: 20px;
+}

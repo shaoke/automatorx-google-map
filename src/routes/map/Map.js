@@ -18,13 +18,73 @@ import s from './map.css';
 import MapAddresses from '../../components/MapAddresses';
 
 class Map extends React.Component {
-  static propTypes = {};
+  constructor(props) {
+    super(props);
+    this.state = {
+      directions: [
+        {
+          value:
+            'Santa Clara, CA / Great America, 5099 Stars and Stripes Dr, Santa Clara, CA 95054',
+          valid: true,
+        },
+        {
+          value: '672 Johanna Ave, Sunnyvale, CA 94085',
+          valid: true,
+        },
+      ],
+    };
+
+    this.createDirection = this.createDirection.bind(this);
+    this.updateDirection = this.updateDirection.bind(this);
+    this.removeDirection = this.removeDirection.bind(this);
+  }
+
+  createDirection(address) {
+    // TODO need to valid address
+    const direction = {
+      value: address,
+      valid: true,
+    };
+    this.setState({
+      directions: [...this.state.directions, direction],
+    });
+  }
+
+  updateDirection(address, index) {
+    // TODO need to valid address
+    const { directions } = this.state;
+    directions[index] = {
+      value: address,
+      valid: true,
+    };
+    this.setState({
+      directions,
+    });
+  }
+
+  removeDirection(index) {
+    let { directions } = this.state;
+    if (!directions) {
+      directions = [];
+    }
+    this.setState({
+      directions: directions.filter((direction, i) => {
+        return i !== index;
+      }),
+    });
+  }
 
   render() {
+    const { directions } = this.state;
     return (
       <Grid container spacing={0}>
         <Grid item xs={4}>
-          <MapAddresses />
+          <MapAddresses
+            directionsData={directions}
+            createDirection={this.createDirection}
+            updateDirection={this.updateDirection}
+            removeDirection={this.removeDirection}
+          />
         </Grid>
         <Grid item xs={8}>
           Right Container

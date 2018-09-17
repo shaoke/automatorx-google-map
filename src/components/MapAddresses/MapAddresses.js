@@ -11,25 +11,35 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import SearchMapDirections from '../SearchMapDirections';
 
+const propTypes = {
+  directionsData: PropTypes.array,
+  createDirection: PropTypes.func.isRequired,
+  updateDirection: PropTypes.func.isRequired,
+  removeDirection: PropTypes.func.isRequired,
+};
+
+const defaultProps = {
+  directionsData: [],
+};
+
 class MapAddresses extends React.Component {
-  static propTypes = {};
-  state = {
-    name: undefined,
-  };
-
-  handleChange = name => event => {
-    this.setState({
-      [name]: event.target.value,
-    });
-  };
-
   render() {
+    const { directionsData } = this.props;
+    console.log(`[MapAddresses] directionsData: ${JSON.stringify(directionsData)}`);
     return (
       <div>
-        <SearchMapDirections />
+        <SearchMapDirections
+          directionsData={directionsData}
+          createDirection={this.props.createDirection}
+          updateDirection={this.props.updateDirection}
+          removeDirection={this.props.removeDirection}
+        />
       </div>
     );
   }
 }
+
+MapAddresses.propTypes = propTypes;
+MapAddresses.defaultProps = defaultProps;
 
 export default MapAddresses;

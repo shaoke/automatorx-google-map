@@ -11,6 +11,7 @@ import path from 'path';
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
+import puppeteer from 'puppeteer';
 import expressJwt, { UnauthorizedError as Jwt401Error } from 'express-jwt';
 import { graphql } from 'graphql';
 import expressGraphQL from 'express-graphql';
@@ -117,6 +118,38 @@ app.use(
     pretty: __DEV__,
   })),
 );
+
+app.post('/preview', (req, res) => {
+  (async () => {
+    const body = req.body;
+    console.log(body);
+    const addresses = [
+      'Whole Foods Market, 20955 Stevens Creek Blvd, Cupertino, CA 95014',
+      '305 N Bayview Ave, Sunnyvale, CA 94085',
+      "Children's Discovery Museum of San Jose, 180 Woz Way, San Jose, CA 95110",
+    ];
+    const browser = await puppeteer.launch({
+      headless: false,
+      defaultViewport: {
+        width: 1400,
+        height: 1000,
+      },
+    });
+    const page = await browser.newPage();
+    const addressesStr = addresses.join('/');
+    const url = `https://www.google.com/maps/dir/${addressesStr}`;
+    console.log(`URL: ${url}`);
+    await page.goto(url, {
+      waitUntil: 'networkidle2',
+    });
+    await page.click('.widget-pane-toggle-button-container');
+    const image = await page.screenshot();
+    // await browser.close();
+    // console.log(typeof image);
+    // console.log(image.toString('base64'));
+    res.send(`data:image/png;base64,${image.toString('base64')}`);
+  })();
+});
 
 //
 // Register server-side rendering middleware

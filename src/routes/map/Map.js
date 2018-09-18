@@ -77,19 +77,21 @@ class Map extends React.Component {
   render() {
     const { directions } = this.state;
     return (
-      <Grid container spacing={0}>
-        <Grid item xs={4}>
-          <MapAddresses
-            directionsData={directions}
-            createDirection={this.createDirection}
-            updateDirection={this.updateDirection}
-            removeDirection={this.removeDirection}
-          />
-        </Grid>
-        <Grid item xs={8}>
-          Right Container
-        </Grid>
-      </Grid>
+      <div id="content-container">
+        <div id="scene">
+          <img src="" />
+        </div>
+        <div id="pane">
+          <div className={{ 'widget-pane': true, 'widget-pane-visible': true }}>
+            <MapAddresses
+              directionsData={directions}
+              createDirection={this.createDirection}
+              updateDirection={this.updateDirection}
+              removeDirection={this.removeDirection}
+            />
+          </div>
+        </div>
+      </div>
     );
   }
 }

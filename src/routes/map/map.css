@@ -24,34 +24,31 @@
   white-space: normal;
 }
 
-.scene{
+.omniboxContainer{
+  top: 0;
   position: absolute;
-  top: -0px;
-  left: 0px;
-  width: 100%;
-  bottom: 0;
-  background-color: #ede9dd;
-  z-index: 0;
+  z-index: 4;
 }
 
-.widget-pane{
-  width: 408px;
+.omnibox{
   position: absolute;
-  top: 0;
-  z-index: 3;
-  opacity: 0;
-  height: 0;
-  left: 0;
+  left: 0px;
+  margin: 8px 0 8px 8px;
+  top: 0px;
+  z-index: 10;
+  transition: left 0.5s;
   -webkit-transform: translateX(0px);
   transform: translateX(0px);
-  transition-property: -webkit-transform,transform,opacity;
-  transition-duration: 0.2s;
+  transition-property: -webkit-transform,transform,visibility,opacity;
+  transition-duration: 200ms;
   transition-timing-function: cubic-bezier(0.0,0.0,0.2,1);
 }
 
-.widget-pane-visible {
-  opacity: 1;
-  height: 100%;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-  background: #fff;
+.widgetDirectionsOmnibox{
+  width: 408px;
+  margin-left: -8px;
+  margin-top: -8px;
+  padding-top: 8px;
+  background: #4285F4 !important;
 }
+

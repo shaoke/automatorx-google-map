@@ -16,6 +16,7 @@ import Grid from '@material-ui/core/Grid';
 import normalizeCss from 'normalize.css';
 import s from './map.css';
 import MapAddresses from '../../components/MapAddresses';
+import WidgetDirectionsTravelModeSwitcher from '../../components/WidgetDirectionsTravelModeSwitcher';
 
 class Map extends React.Component {
   constructor(props) {
@@ -81,14 +82,13 @@ class Map extends React.Component {
         <div id="scene">
           <img src="" />
         </div>
-        <div id="pane">
-          <div className={{ 'widget-pane': true, 'widget-pane-visible': true }}>
-            <MapAddresses
-              directionsData={directions}
-              createDirection={this.createDirection}
-              updateDirection={this.updateDirection}
-              removeDirection={this.removeDirection}
-            />
+        <div id="omnibox-container" className={s.omniboxContainer}>
+          <div id="omnibox" className={s.omnibox}>
+            <div id="omnibox-directions">
+              <div className={s.widgetDirectionsOmnibox}>
+                <WidgetDirectionsTravelModeSwitcher />
+              </div>
+            </div>
           </div>
         </div>
       </div>

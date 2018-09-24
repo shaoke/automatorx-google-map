@@ -119,22 +119,31 @@ app.use(
   })),
 );
 
-app.post('/preview', (req, res) => {
-  (async () => {
-    const body = req.body;
-    console.log(body);
-    const addresses = [
+/*
+  POST /preview
+  {
+    view:{
+      width: 1400,
+      height: 1000
+    },
+    addresses: [
       'Whole Foods Market, 20955 Stevens Creek Blvd, Cupertino, CA 95014',
       '305 N Bayview Ave, Sunnyvale, CA 94085',
       "Children's Discovery Museum of San Jose, 180 Woz Way, San Jose, CA 95110",
-    ];
-    const browser = await puppeteer.launch({
-      headless: false,
-      defaultViewport: {
-        width: 1400,
-        height: 1000,
-      },
-    });
+    ]
+  }
+*/
+app.post('/preview', (req, res) => {
+  (async () => {
+    const body = req.body || {};
+    console.log(body);
+    const addresses = body.addresses || [];
+    const view = body.view || {};
+    const options = {
+      headless: true,
+      defaultViewport: view,
+    };
+    const browser = await puppeteer.launch(options);
     const page = await browser.newPage();
     const addressesStr = addresses.join('/');
     const url = `https://www.google.com/maps/dir/${addressesStr}`;
@@ -144,7 +153,7 @@ app.post('/preview', (req, res) => {
     });
     await page.click('.widget-pane-toggle-button-container');
     const image = await page.screenshot();
-    // await browser.close();
+    await browser.close();
     // console.log(typeof image);
     // console.log(image.toString('base64'));
     res.send(`data:image/png;base64,${image.toString('base64')}`);

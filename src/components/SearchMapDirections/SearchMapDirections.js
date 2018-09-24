@@ -56,7 +56,12 @@ class SearchMapDirections extends React.Component {
     const { activeStep } = this.state;
     return (
       <div className={s.root}>
-        <Stepper nonLinear activeStep={activeStep} orientation="vertical">
+        <Stepper
+          nonLinear
+          activeStep={activeStep}
+          orientation="vertical"
+          className={s.stepper}
+        >
           {directionsData.map((step, index) => {
             return (
               <Step key={`${index}`}>
@@ -72,11 +77,13 @@ class SearchMapDirections extends React.Component {
                         this.handleClickAddressInput(event, index)
                       }
                       placeholder="Please type correct address"
+                      className={s.stepLabelInput}
                     />
                     <IconButton
                       onClick={() => this.props.removeDirection(index)}
+                      className={s.deleteButton}
                     >
-                      <DeleteIcon />
+                      <DeleteIcon className={s.deleteIcon} />
                     </IconButton>
                   </div>
                 </StepLabel>

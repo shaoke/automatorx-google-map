@@ -15,7 +15,8 @@ import Grid from '@material-ui/core/Grid';
 // import { withStyles } from '@material-ui/core/styles';
 import normalizeCss from 'normalize.css';
 import s from './map.css';
-import MapAddresses from '../../components/MapAddresses';
+// import MapAddresses from '../../components/MapAddresses';
+import SearchMapDirections from '../../components/SearchMapDirections';
 import WidgetDirectionsTravelModeSwitcher from '../../components/WidgetDirectionsTravelModeSwitcher';
 
 class Map extends React.Component {
@@ -83,12 +84,14 @@ class Map extends React.Component {
           <img src="" />
         </div>
         <div id="omnibox-container" className={s.omniboxContainer}>
-          <div id="omnibox" className={s.omnibox}>
-            <div id="omnibox-directions">
-              <div className={s.widgetDirectionsOmnibox}>
-                <WidgetDirectionsTravelModeSwitcher />
-              </div>
-            </div>
+          <div className={s.widgetDirectionsOmnibox}>
+            <WidgetDirectionsTravelModeSwitcher />
+            <SearchMapDirections
+              directionsData={directions}
+              createDirection={this.createDirection}
+              updateDirection={this.updateDirection}
+              removeDirection={this.removeDirection}
+            />
           </div>
         </div>
       </div>

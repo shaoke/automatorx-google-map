@@ -25,6 +25,7 @@ class WidgetDirectionsTravelModeSwitcher extends React.Component {
                 [s.adjustedToDecreasedSpacing]: true,
               })}
             >
+              <a href="/" className={s.logoItem} />
               <WidgetDirectionsTravelModeItem icon="directionsMixedIcon" />
               <WidgetDirectionsTravelModeItem icon="directionsDriveIcon" />
               <WidgetDirectionsTravelModeItem icon="directionsTransitIcon" />
@@ -33,22 +34,6 @@ class WidgetDirectionsTravelModeSwitcher extends React.Component {
               <WidgetDirectionsTravelModeItem icon="directionsFlyIcon" />
             </div>
           </div>
-          <button
-            aria-label="Close directions"
-            data-tooltip="Close directions"
-            vet="14442"
-            jstcache="515"
-            jsaction="close;focus:pane.focusTooltip;blur:pane.blurTooltip"
-            className="widget-directions-close"
-            jsan="7.widget-directions-close,0.ved,0.aria-label,0.data-tooltip,0.vet,22.jsaction"
-            ved="1i:3,t:14442,e:2,p:khikW_OjPLHS9AOyxL-4BA:10"
-          >
-            <div
-              guidedhelpid="close_directions"
-              className="widget-directions-icon close-directions"
-            />
-            <div className="loading-indicator" />
-          </button>
         </div>
       </div>
     );

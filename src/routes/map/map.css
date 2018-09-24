@@ -25,9 +25,19 @@
 }
 
 .omniboxContainer{
-  top: 0;
+  width: 408px;
+  background: #4285F4 !important;
   position: absolute;
-  z-index: 4;
+  top: 0;
+  z-index: 3;
+  left: 0;
+  -webkit-transform: translateX(0px);
+  transform: translateX(0px);
+  transition-property: -webkit-transform,transform,opacity;
+  transition-duration: 0.2s;
+  transition-timing-function: cubic-bezier(0.0,0.0,0.2,1);
+  height: 100%;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
 }
 
 .omnibox{
@@ -45,10 +55,6 @@
 }
 
 .widgetDirectionsOmnibox{
-  width: 408px;
-  margin-left: -8px;
-  margin-top: -8px;
-  padding-top: 8px;
   background: #4285F4 !important;
 }
 

@@ -1,13 +1,38 @@
 .root{
-    width: '100%';
+    /* width: '100%'; */
+}
+
+.stepper{
+    background: #4285F4 !important;
 }
 
 .stepLabelContainer {
     display: flex;
+    color: white;
+}
+
+.stepLabelInput{
+    color: white !important;
+}
+
+.stepLabelInput::before{
+    border-bottom: 1px solid #97bcf9 !important;
+}
+
+.stepLabelInput::after{
+    border-bottom: 2px solid white !important; 
 }
 
 .operationContainer {
     padding: 20px;
+}
+
+.deleteButton:hover{
+    background-color: #3367D6 !important;
+}
+
+.deleteIcon{
+    color: white;
 }
 
 .previewBtn{

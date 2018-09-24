@@ -25,7 +25,7 @@ class WidgetDirectionsTravelModeItem extends React.Component {
   render() {
     return (
       <div className={s.root}>
-        <button role="radio" classnames={s.directionsIconButton}>
+        <button role="radio" className={s.directionsIconButton}>
           <div
             className={classnames({
               [s.directionsTravelModeIcon]: true,

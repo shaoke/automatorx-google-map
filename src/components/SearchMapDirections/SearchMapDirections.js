@@ -19,6 +19,7 @@ import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Input from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
+import classnames from 'classnames';
 
 import s from './SearchMapDirections.css';
 
@@ -27,6 +28,7 @@ const propTypes = {
   createDirection: PropTypes.func.isRequired,
   updateDirection: PropTypes.func.isRequired,
   removeDirection: PropTypes.func.isRequired,
+  preview$: PropTypes.func.isRequired,
 };
 
 class SearchMapDirections extends React.Component {
@@ -93,6 +95,7 @@ class SearchMapDirections extends React.Component {
         </Stepper>
         <div className={s.operationContainer}>
           <Button
+            className={s.searchMapBtn}
             variant="outlined"
             color="primary"
             onClick={() => this.props.createDirection('')}
@@ -101,7 +104,15 @@ class SearchMapDirections extends React.Component {
             <span> Add destination </span>
           </Button>
 
-          <Button variant="outlined" color="primary" className={s.previewBtn}>
+          <Button
+            variant="outlined"
+            color="primary"
+            className={classnames({
+              [s.searchMapBtn]: true,
+              [s.previewBtn]: true,
+            })}
+            onClick={() => this.props.preview$()}
+          >
             <PageView />
             <span> Preview </span>
           </Button>

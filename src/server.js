@@ -11,6 +11,7 @@ import path from 'path';
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
+import compression from 'compression';
 import puppeteer from 'puppeteer';
 import expressJwt, { UnauthorizedError as Jwt401Error } from 'express-jwt';
 import { graphql } from 'graphql';
@@ -48,6 +49,8 @@ global.navigator.userAgent = global.navigator.userAgent || 'all';
 
 const app = express();
 
+let _BROWSER = null;
+
 //
 // If you are using proxy from external machine, you can set TRUST_PROXY env
 // Default is to trust proxy headers only from loopback interface.
@@ -84,6 +87,7 @@ app.use((err, req, res, next) => {
 });
 
 app.use(passport.initialize());
+app.use(compression());
 
 app.get(
   '/login/facebook',
@@ -136,15 +140,23 @@ app.use(
 app.post('/preview', (req, res) => {
   (async () => {
     const body = req.body || {};
-    console.log(body);
-    const addresses = body.addresses || [];
+    let addresses = body.addresses || [];
     const view = body.view || {};
-    const options = {
-      headless: true,
-      defaultViewport: view,
-    };
-    const browser = await puppeteer.launch(options);
-    const page = await browser.newPage();
+
+    if (!_BROWSER) {
+      const options = {
+        headless: true,
+      };
+      _BROWSER = await puppeteer.launch(options);
+    }
+
+    const page = await _BROWSER.newPage();
+    await page.setViewport({
+      width: view.width,
+      height: view.height,
+      deviceScaleFactor: 2,
+    });
+    addresses = addresses.map(item=>encodeURIComponent(item));
     const addressesStr = addresses.join('/');
     const url = `https://www.google.com/maps/dir/${addressesStr}`;
     console.log(`URL: ${url}`);
@@ -153,7 +165,7 @@ app.post('/preview', (req, res) => {
     });
     await page.click('.widget-pane-toggle-button-container');
     const image = await page.screenshot();
-    await browser.close();
+    await page.close();
     // console.log(typeof image);
     // console.log(image.toString('base64'));
     res.send(`data:image/png;base64,${image.toString('base64')}`);

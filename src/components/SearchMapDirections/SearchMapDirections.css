@@ -35,6 +35,11 @@
     color: white;
 }
 
+.searchMapBtn{
+    color: white !important;
+    border: 1px solid rgba(255, 255, 255, 0.6) !important;
+}
+
 .previewBtn{
-    margin-left: 20px;
+    margin-left: 20px !important;
 }

@@ -10,12 +10,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import Grid from '@material-ui/core/Grid';
+import axios from 'axios';
 
 // import { withStyles } from '@material-ui/core/styles';
 import normalizeCss from 'normalize.css';
 import s from './map.css';
-// import MapAddresses from '../../components/MapAddresses';
 import SearchMapDirections from '../../components/SearchMapDirections';
 import WidgetDirectionsTravelModeSwitcher from '../../components/WidgetDirectionsTravelModeSwitcher';
 
@@ -34,11 +33,13 @@ class Map extends React.Component {
           valid: true,
         },
       ],
+      previewImg: null,
     };
 
     this.createDirection = this.createDirection.bind(this);
     this.updateDirection = this.updateDirection.bind(this);
     this.removeDirection = this.removeDirection.bind(this);
+    this.preview$ = this.preview$.bind(this);
   }
 
   createDirection(address) {
@@ -76,12 +77,37 @@ class Map extends React.Component {
     });
   }
 
+  async preview$(){
+    const data = {
+      view: {
+        width: window.innerWidth,
+        height: window.innerHeight,
+      },
+      addresses: this.state.directions
+        .filter(item => item.valid)
+        .map(item => item.value),
+    };
+    console.log("preview Data: ", data);
+
+    const res = await axios.post('/preview', data);
+    if (res.data) {
+      this.setState({
+        previewImg: res.data,
+      });
+    }
+    return true;
+  }
+
   render() {
-    const { directions } = this.state;
+    const { directions, previewImg } = this.state;
     return (
       <div id="content-container">
         <div id="scene">
-          <img src="" />
+          {previewImg ? (
+            <img className={s.previewImg} src={previewImg} alt="Preview Map" />
+          ) : (
+            <div>You can click preview</div>
+          )}
         </div>
         <div id="omnibox-container" className={s.omniboxContainer}>
           <div className={s.widgetDirectionsOmnibox}>
@@ -91,6 +117,7 @@ class Map extends React.Component {
               createDirection={this.createDirection}
               updateDirection={this.updateDirection}
               removeDirection={this.removeDirection}
+              preview$={this.preview$}
             />
           </div>
         </div>

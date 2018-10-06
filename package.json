@@ -41,7 +41,9 @@
     "source-map-support": "^0.5.6",
     "sqlite3": "^4.0.0",
     "universal-router": "^6.0.0",
-    "whatwg-fetch": "^2.0.4"
+    "whatwg-fetch": "^2.0.4",
+    "axios": "^0.18.0",
+    "compression": "^1.7.3"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
@@ -66,7 +68,7 @@
     "babel-jest": "^23.0.1",
     "babel-loader": "^8.0.0",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.13",
-    "browser-sync": "^2.24.4",
+    "browser-sync": "^2.26.0",
     "chokidar": "^2.0.4",
     "css-loader": "^0.28.11",
     "enzyme": "^3.3.0",

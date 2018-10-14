@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import directionImage from './directions.png';
+import logoSmallImg from './logo-small.png';
 
 // import { FormattedMessage } from 'react-intl';
 // import messages from './messages';
@@ -85,16 +86,25 @@ const DirectionIcon = styled.div`
   width: 24px;
   height: 24px;
   margin: 12px 9px 11px 9px;
-  background-position: ${props =>
-    iconPosition[props.icon] || iconPosition.Mixed};
+  background-position: ${props => iconPosition[props.icon]};
+`;
+
+const Logo = styled.div`
+  background-image: url(${logoSmallImg});
+  background-size: 24px;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 24px;
+  height: 24px;
+  margin: 12px 9px 11px 9px;
 `;
 
 /* eslint-disable react/prefer-stateless-function */
-function DirectionsTravelModeItem() {
+function DirectionsTravelModeItem(props) {
   return (
     <Root>
       <DirectionButton>
-        <DirectionIcon />
+        {props.icon === 'Logo' ? <Logo /> : <DirectionIcon />}
       </DirectionButton>
     </Root>
   );

@@ -11,7 +11,7 @@ import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 
-import DirectionsTravelModeItem from '../../components/DirectionsTravelModeItem';
+import DirectionsTravelModeSwitcher from '../../components/DirectionsTravelModeSwitcher';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import makeSelectMapDetailPage from './selectors';
@@ -24,8 +24,7 @@ export class MapDetailPage extends React.Component {
   render() {
     return (
       <div>
-        <FormattedMessage {...messages.header} />
-        <DirectionsTravelModeItem />
+        <DirectionsTravelModeSwitcher />
       </div>
     );
   }

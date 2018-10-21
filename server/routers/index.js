@@ -1,8 +1,8 @@
-import puppeteer from 'puppeteer';
+// import puppeteer from 'puppeteer';
 
 const express = require('express');
 const router = express.Router();
-// const puppeteer = require('puppeteer');
+const puppeteer = require('puppeteer');
 
 // let BROWSER = null;
 

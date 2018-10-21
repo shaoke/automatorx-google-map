@@ -1,8 +1,7 @@
 /* eslint consistent-return:0 */
-import cookieParser from 'cookie-parser';
-import bodyParser from 'body-parser';
-import compression from 'compression';
-
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const compression = require('compression');
 const express = require('express');
 const routers = require('./routers');
 const logger = require('./logger');

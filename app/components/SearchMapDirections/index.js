@@ -9,7 +9,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import styled from 'styled-components';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddCircleOutline from '@material-ui/icons/AddCircleOutline';
@@ -21,7 +21,7 @@ import Input from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
 import classnames from 'classnames';
 
-import s from './SearchMapDirections.css';
+import s from './styles.css';
 
 const propTypes = {
   directionsData: PropTypes.array,
@@ -30,6 +30,12 @@ const propTypes = {
   removeDirection: PropTypes.func.isRequired,
   preview$: PropTypes.func.isRequired,
 };
+
+const CustomStepper = styled(Stepper)`
+  &[style] {
+    background: #4285f4 !important;
+  }
+`;
 
 class SearchMapDirections extends React.Component {
   constructor(props) {
@@ -54,20 +60,23 @@ class SearchMapDirections extends React.Component {
   }
 
   render() {
-    const { directionsData } = this.props;
+    let { directionsData } = this.props;
     const { activeStep } = this.state;
+    if (!directionsData) {
+      directionsData = [];
+    }
     return (
-      <div className={s.root}>
+      <div className="SearchMapDirections">
         <Stepper
           nonLinear
           activeStep={activeStep}
           orientation="vertical"
-          className={s.stepper}
+          className="stepper"
         >
           {directionsData.map((step, index) => (
             <Step key={`${index}`}>
               <StepLabel>
-                <div className={s.stepLabelContainer}>
+                <div className="stepLabelContainer">
                   <Input
                     key={`address-${index}`}
                     fullWidth
@@ -78,22 +87,22 @@ class SearchMapDirections extends React.Component {
                       this.handleClickAddressInput(event, index)
                     }
                     placeholder="Please type correct address"
-                    className={s.stepLabelInput}
+                    className="stepLabelInput"
                   />
                   <IconButton
                     onClick={() => this.props.removeDirection(index)}
                     className={s.deleteButton}
                   >
-                    <DeleteIcon className={s.deleteIcon} />
+                    <DeleteIcon className="deleteIcon" />
                   </IconButton>
                 </div>
               </StepLabel>
             </Step>
           ))}
         </Stepper>
-        <div className={s.operationContainer}>
+        <div className="operationContainer">
           <Button
-            className={s.searchMapBtn}
+            className="searchMapBtn"
             variant="outlined"
             color="primary"
             onClick={() => this.props.createDirection('')}
@@ -106,8 +115,8 @@ class SearchMapDirections extends React.Component {
             variant="outlined"
             color="primary"
             className={classnames({
-              [s.searchMapBtn]: true,
-              [s.previewBtn]: true,
+              searchMapBtn: true,
+              previewBtn: true,
             })}
             onClick={() => this.props.preview$()}
           >
@@ -122,4 +131,4 @@ class SearchMapDirections extends React.Component {
 
 SearchMapDirections.propTypes = propTypes;
 
-export default withStyles(s)(SearchMapDirections);
+export default SearchMapDirections;

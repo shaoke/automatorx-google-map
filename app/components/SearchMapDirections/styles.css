@@ -1,0 +1,43 @@
+
+.SearchMapDirections .stepper{
+    background: #4285F4 !important;
+    padding: 0 10px !important;
+}
+
+.SearchMapDirections .stepLabelContainer {
+    display: flex;
+    color: white;
+}
+
+.SearchMapDirections .stepLabelInput{
+    color: white !important;
+}
+
+.SearchMapDirections .stepLabelInput::before{
+    border-bottom: 1px solid #97bcf9 !important;
+}
+
+.SearchMapDirections .stepLabelInput::after{
+    border-bottom: 2px solid white !important;
+}
+
+.SearchMapDirections .operationContainer {
+    padding: 20px;
+}
+
+.SearchMapDirections .deleteButton:hover{
+    background-color: #3367D6 !important;
+}
+
+.SearchMapDirections .deleteIcon{
+    color: white;
+}
+
+.SearchMapDirections .searchMapBtn{
+    color: white !important;
+    border: 1px solid rgba(255, 255, 255, 0.6) !important;
+}
+
+.SearchMapDirections .previewBtn{
+    margin-left: 20px !important;
+}

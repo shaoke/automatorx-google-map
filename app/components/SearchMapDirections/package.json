@@ -1,6 +1,6 @@
 {
-  "name": "SearchMapDirections",
+  "name": "@components/search-map-directions",
   "version": "0.0.0",
   "private": true,
-  "main": "./SearchMapDirections.js"
+  "main": "./index.js"
 }

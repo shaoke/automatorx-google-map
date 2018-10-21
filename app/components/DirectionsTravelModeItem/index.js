@@ -22,6 +22,7 @@ const defaultProps = {
   icon: 'Mixed',
 };
 
+// define an array to contains all icon positions
 const iconPosition = {
   Mixed: '-48px -72px',
   MixedSelected: '-24px -72px',
@@ -86,7 +87,8 @@ const DirectionIcon = styled.div`
   width: 24px;
   height: 24px;
   margin: 12px 9px 11px 9px;
-  background-position: ${props => iconPosition[props.icon]};
+  background-position: ${props =>
+    iconPosition[props.icon] || iconPosition.Mixed};
 `;
 
 const Logo = styled.div`
@@ -104,7 +106,7 @@ function DirectionsTravelModeItem(props) {
   return (
     <Root>
       <DirectionButton>
-        {props.icon === 'Logo' ? <Logo /> : <DirectionIcon />}
+        {props.icon === 'Logo' ? <Logo /> : <DirectionIcon icon={props.icon} />}
       </DirectionButton>
     </Root>
   );

@@ -1,0 +1,209 @@
+---
+openapi: 3.0.0
+info:
+  title: AutomatorX - Google Map
+  description: Collect commuting time information
+  contact:
+    email: shaokexu@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/Neo1/automatorx-google-map/1.0.0
+  description: AutomatorX - Google Map RESTFul APIs
+tags:
+- name: users
+  description: all users
+paths:
+  /spiders:
+    get:
+      tags:
+      - users
+      summary: Get multiple spiders
+      description: |
+        By passing in the appropriate options, you can search for
+        available inventory in the system
+      operationId: searchSpiders
+      parameters:
+      - name: page
+        in: query
+        description: current page
+        required: false
+        style: FORM
+        explode: true
+        schema:
+          type: number
+          default: 0
+      - name: limit
+        in: query
+        description: Number of items per page
+        required: false
+        style: FORM
+        explode: true
+        schema:
+          type: number
+          default: 100
+      - name: search
+        in: query
+        description: search string
+        required: false
+        style: FORM
+        explode: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: search results matching criteria
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Spider'
+        400:
+          description: bad input parameter
+    post:
+      tags:
+      - users
+      summary: add a spider
+      description: Add a spider
+      operationId: addSpider
+      requestBody:
+        description: Inventory item to add
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Spider'
+      responses:
+        201:
+          description: item created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_201'
+        400:
+          description: invalid input, object invalid
+  /spiders/{id}:
+    get:
+      tags:
+      - users
+      summary: Get an individual spider
+      description: Get an individual spider by spider id
+      operationId: getSpider
+      parameters:
+      - name: id
+        in: path
+        description: spider id
+        required: true
+        style: SIMPLE
+        explode: false
+        schema:
+          type: string
+          format: uuid
+          example: d290f1ee-6c54-4b01-90e6-d701748f0851
+      responses:
+        200:
+          description: individual spider
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Spider'
+  /spiders/{id}/scraping:
+    post:
+      tags:
+      - users
+      summary: Get an individual spider
+      description: Get an individual spider by spider id
+      operationId: scrapeSpider
+      parameters:
+      - name: id
+        in: path
+        description: spider id
+        required: true
+        style: SIMPLE
+        explode: false
+        schema:
+          type: string
+          format: uuid
+          example: d290f1ee-6c54-4b01-90e6-d701748f0851
+      - name: start
+        in: query
+        description: whether start scraping
+        required: true
+        style: FORM
+        explode: true
+        schema:
+          type: boolean
+      responses:
+        201:
+          description: item created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_201'
+        400:
+          description: invalid input, object invalid
+components:
+  schemas:
+    Spider:
+      required:
+      - id
+      - name
+      - status
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: d290f1ee-6c54-4b01-90e6-d701748f0851
+        name:
+          type: string
+          description: spider name
+          example: From Santa Clara Caltrain to Facebook
+        status:
+          type: string
+          description: status of spider. When it is active then this means it is scraping data now
+          example: valid
+          enum:
+          - draft
+          - valid
+        scraping:
+          type: boolean
+          description: spider is scraping or not
+        directions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Direction'
+        settings:
+          $ref: '#/components/schemas/Spider_settings'
+      description: Spider defines what data we want to spide now
+    Direction:
+      required:
+      - valid
+      - value
+      type: object
+      properties:
+        valid:
+          type: boolean
+          description: whether this is a valid direction
+        value:
+          type: string
+          description: direction value
+          example: Facebook, 1 Hacker Way, Menlo Park, CA 94025
+    inline_response_201:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: d290f1ee-6c54-4b01-90e6-d701748f0851
+    Spider_settings:
+      type: object
+      properties:
+        polling:
+          minimum: 10
+          type: number
+          description: polling time, unit is min
+          default: 10
+  extensions: {}

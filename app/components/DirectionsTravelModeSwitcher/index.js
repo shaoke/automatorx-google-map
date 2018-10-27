@@ -7,6 +7,7 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 // import { FormattedMessage } from 'react-intl';
 
@@ -43,7 +44,9 @@ function DirectionsTravelModeSwitcher() {
       <Container>
         <div role="radiogroup">
           <DirectionsTravelModeSelector>
-            <DirectionsTravelModeItem icon="Logo" />
+            <Link to="/">
+              <DirectionsTravelModeItem icon="Logo" />
+            </Link>
             <DirectionsTravelModeItem icon="Mixed" />
             <DirectionsTravelModeItem icon="Drive" />
             <DirectionsTravelModeItem icon="Transit" />
